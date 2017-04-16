@@ -172,7 +172,7 @@ class QRss
                     'title' => (string) $item->title,
                     'link' => (string) $item->link,
                     'description' => (string) $item->description,
-                    'description_text' => strip_tags($item->description->asXml()),
+                    'description_text' => strip_tags($item->description),
                     'pubDate' => (string) $item->pubDate
                 ]);
             }
