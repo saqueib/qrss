@@ -1,5 +1,5 @@
 # qrss
-An API Class to parse the RSS feed into json with cache option http://www.qcode.in/complete-rss-feed-reader-app-using-vue-js-vuex-php-rss-parser-api
+An API Class to parse the RSS feed into json with cache option.
 
 ## Getting Start
 Grab the `QRss` class and use require it in your php file.
