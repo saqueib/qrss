@@ -7,3 +7,6 @@ require 'src/QRss.php';
 
 // Get the fresh feed ignoring cache
 //(new QRss('https://en.blog.wordpress.com/feed/'))->fresh()->json();
+
+// Get the feed ignoring validation adding novalidate()
+//(new QRss('https://en.blog.wordpress.com/feed/'))->novalidate()->json();
