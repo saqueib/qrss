@@ -12,6 +12,9 @@
  * For fresh copy you can use fresh() which will ignore cache
  *      (new Qrss('https://news.google.com/?output=rss'))->fresh()->json()
  *
+ * For other XML files rather than RSS you can use novalidate() which will ignore validation
+ *      (new Qrss('https://news.google.com/?output=rss'))->novalidate()->json()
+ *
  * You can also extend the parse method to customize the output
  *
  * class MyQrss extends QRss {
@@ -58,6 +61,13 @@ class QRss
      * @var bool
      */
     private $fresh_copy = false;
+
+    /**
+     * Flag to bypass the validation
+     *
+     * @var bool
+     */
+    private $no_validate = false;
 
     /**
      * Parser element array
@@ -127,6 +137,17 @@ class QRss
     public function fresh()
     {
         $this->fresh_copy = true;
+        return $this;
+    }
+
+    /**
+     * Setter for no validation
+     *
+     * @return $this
+     */
+    public function novalidate()
+    {
+        $this->no_validate = true;
         return $this;
     }
 
@@ -285,7 +306,10 @@ class QRss
     {
         $rss = @simplexml_load_string($xml);
 
-        return ($rss && $rss->channel) ? $rss : false;
+        if( ! $this->no_validate ) {
+            return ($rss && $rss->channel) ? $rss : false;
+        }
+        return ($rss);
     }
 
     /**

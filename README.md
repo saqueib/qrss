@@ -12,6 +12,9 @@ require 'src/QRss.php';
 
 // For fresh copy you can use fresh() which will ignore cache
 (new Qrss('https://news.google.com/?output=rss'))->fresh()->json()
+
+// Get the feed ignoring validation adding novalidate()
+(new QRss('https://en.blog.wordpress.com/feed/'))->novalidate()->json();
 ```
 
 ## Override Parser
