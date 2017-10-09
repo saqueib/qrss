@@ -15,6 +15,9 @@
  * For other XML files rather than RSS you can use novalidate() which will ignore validation
  *      (new Qrss('https://news.google.com/?output=rss'))->novalidate()->json()
  *
+ * There is also an option to get data in plain text using text() instead of json()
+ *      (new Qrss('https://news.google.com/?output=rss'))->text();
+ *
  * You can also extend the parse method to customize the output
  *
  * class MyQrss extends QRss {
@@ -115,6 +118,23 @@ class QRss
         }
 
         $this->json_response($this->parse($xml));
+    }
+
+    /**
+     * Outputs the text response
+     */
+    public function text()
+    {
+        if ( ! $xml = $this->fetch() ) {
+            $last_error = error_get_last();
+
+            $this->json_response( [
+                "{$this->error_msg_key}" =>  "Unable to connect to URL",
+                'error' => $last_error['message']],
+            500);
+        }
+
+        $this->text_response($this->parse($xml));
     }
 
     /**
@@ -355,5 +375,19 @@ class QRss
         http_response_code($status_code);
         header('Content-Type: application/json');
         die(json_encode($data));
+    }
+
+    /**
+     * Die a text response
+     *
+     * @param $data
+     * @param int $status_code
+     */
+    private  function text_response($data, $status_code = 200) {
+        $data = is_string($data) ? [$data] : $data;
+
+        http_response_code($status_code);
+        header('Content-Type: text/plain');
+        die($data);
     }
 }

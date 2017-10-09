@@ -15,6 +15,9 @@ require 'src/QRss.php';
 
 // Get the feed ignoring validation adding novalidate()
 (new QRss('https://en.blog.wordpress.com/feed/'))->novalidate()->json();
+
+// There is also an option to get data in plain text using text() instead of json()
+(new Qrss('https://news.google.com/?output=rss'))->text();
 ```
 
 ## Override Parser
